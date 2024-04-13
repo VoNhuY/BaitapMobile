@@ -7,14 +7,14 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-interface StopWatchProps {}
+interface StopWatchProps { }
 
 interface StopWatchState {
   timeElapsed: number | null;
   running: boolean;
   startTime: Date | null;
   laps: number[];
-  interval?: NodeJS.Timeout; 
+  interval?: NodeJS.Timeout;
 }
 
 export default class StopWatch extends Component<StopWatchProps, StopWatchState> {
@@ -37,7 +37,6 @@ export default class StopWatch extends Component<StopWatchProps, StopWatchState>
     milliseconds %= 60000;
     let seconds = Math.floor(milliseconds / 1000);
     milliseconds %= 1000;
-
     return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}.${milliseconds < 100 ? '0' : ''}${milliseconds < 10 ? '0' : ''}${milliseconds}`;
   }
 
@@ -56,19 +55,20 @@ export default class StopWatch extends Component<StopWatchProps, StopWatchState>
 
   startStopButton() {
     var style = this.state.running ? styles.stopButton : styles.startButton;
-
     return (
-      <TouchableHighlight underlayColor="gray" onPress={this.handleStartPress} style={[styles.button, style]}>
+      <TouchableHighlight underlayColor="green" onPress={this.handleStartPress} style={[styles.button, style]}>
         <Text>
           {this.state.running ? 'Stop' : 'Start'}
         </Text>
-      </TouchableHighlight>
+      </TouchableHighlight >
+
     );
+
   }
 
   lapButton() {
     return (
-      <TouchableHighlight style={styles.button} underlayColor="gray" onPress={this.handleLapPress}>
+      <TouchableHighlight style={styles.button} underlayColor="pink" onPress={this.handleLapPress}>
         <Text>
           Lap
         </Text>
@@ -79,7 +79,7 @@ export default class StopWatch extends Component<StopWatchProps, StopWatchState>
   handleLapPress() {
     var lap = this.state.timeElapsed as number;
     this.setState({
-      startTime: new Date(),
+      //startTime: new Date(),
       laps: this.state.laps.concat([lap])
     });
   }
@@ -126,10 +126,11 @@ export default class StopWatch extends Component<StopWatchProps, StopWatchState>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 20
+    margin: 20,
   },
   header: {
     flex: 1
+
   },
   footer: {
     flex: 1
@@ -159,19 +160,20 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center'
+
   },
   timer: {
     fontSize: 60
   },
   lapText: {
-    fontSize: 30
+    fontSize: 30,
   },
   startButton: {
     borderColor: 'green'
   },
   stopButton: {
     borderColor: 'red'
+
   }
 });
-
-//AppRegistry.registerComponent('StopWatch', () => StopWatch);
+AppRegistry.registerComponent('StopWatch', () => StopWatch);
